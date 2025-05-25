@@ -29,9 +29,9 @@ services:
     networks:
       - blog-app-net
   blog-server:
-    image: nandmakadia/blog-app:build-cc1c28418cde08fa636fa52a750334171650d005
+    image: nandmakadia/blog-app:build-0
     deploy:
-      replicas: 2
+      replicas: 1
       update_config:
         order: start-first
         failure_action: rollback
