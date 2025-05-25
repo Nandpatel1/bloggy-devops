@@ -39,29 +39,29 @@ jobs:
           git commit -m "bump the image version ${{env.IMAGE_TAG}}"
           git push
 
-#     deploy:
-#         name: Deploy the image to Docker Swarm Cluster
-#         runs-on: ubuntu-latest
-#         env:
-#             IMAGE_NAME: nandmakadia/blog-app
-#             IMAGE_TAG: build-${{github.sha}}
-#         needs:
-#             - build-and-push
-#         steps:
-#             - name: SSH into the server
-#               uses: appleboy/ssh-action@v1
-#               with:
-#                   host: ${{secrets.SWARM_MANAGER_HOST}}
-#                   username: ${{secrets.SWARM_HOST_USERNAME}}
-#                   key: ${{secrets.SWARM_HOST_SSH_KEY}}
-#                   port: ${{secrets.SWARM_HOST_SSH_PORT}}
-#                   script: |
-#                       set -e
-#                       cd ~/bloggy
+  deploy:
+    name: Deploy the image to Docker Swarm Cluster
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: nandmakadia/blog-app
+      IMAGE_TAG: build-${{github.sha}}
+    needs:
+      - build-and-push
+    steps:
+      - name: SSH into the server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{secrets.SWARM_MANAGER_HOST}}
+          username: ${{secrets.SWARM_HOST_USERNAME}}
+          key: ${{secrets.SWARM_HOST_SSH_KEY}}
+          port: ${{secrets.SWARM_HOST_SSH_PORT}}
+          script: |
+            set -e
+            cd ~/bloggy
 
-#                       # pull compose file using git
-#                       git fetch origin main
-#                       git checkout origin/main
+            # pull compose file using git
+            git fetch origin main
+            git checkout origin/main
 
-#                       docker pull ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
-#                       docker stack deploy -c compose.yaml bloggy
+            sudo docker pull ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+            sudo docker stack deploy -c compose.yaml bloggy
