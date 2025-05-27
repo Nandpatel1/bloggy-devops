@@ -29,7 +29,7 @@ services:
     networks:
       - blog-app-net
   blog-server:
-    image: nandmakadia/blog-app:build-00f7e21e3dfa52f84e8875e5c4b063a03d94e90f
+    image: nandmakadia/blog-app:build-1048ca2c4fc83a94b3aaa943a16f991ae15c1ef2
     deploy:
       replicas: 1
       update_config:
