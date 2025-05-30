@@ -31,7 +31,7 @@ services:
     secrets:
       - db_password
   blog-server:
-    image: nandmakadia/blog-app:build-44e0767434e3e885e3e90c0831dc36c5da822f03
+    image: nandmakadia/blog-app:build-31dd237009b000f8da124efcd58b93060e67c0d1
     deploy:
       replicas: 2
       update_config:
